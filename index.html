@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="icon" type="image/x-icon" href="fav.jpg">
+
+<title>Corepunk Weapon Mastery</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #222;
+    color: #fff;
+    padding: 20px;
+  }
+
+  h1 {
+    margin-bottom: 20px;
+  }
+
+  .class-select {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: flex-start;
+    
+  }
+
+  .class-select button {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #333;
+    border: 3px solid #777;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    text-align: center;
+    padding: 5px;
+    color: #fff;
+    font-weight: bold;
+    box-sizing: border-box;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .class-select button:hover {
+    border-color: #e5ff00;
+  }
+
+  .class-select button:active {
+    border-color: rgb(255, 255, 255);
+  }
+
+  .class-select button.selected {
+    border-color: #e5ff00;
+    transform: scale(1.2);
+    box-shadow: 0 0 15px #e5ff00;
+  }
+
+  .container {
+    display: flex;
+    align-items: flex-start;
+    gap: 50px;
+    margin-bottom: 20px;
+  }
+
+  .mastery-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 40px; /* space between rows */
+  }
+
+  .mastery-row {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+
+  .node-connector {
+    width: 40px;
+    height: 4px;
+    background: #555;
+    flex-shrink: 0;
+  }
+
+  .start-node {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: #333;
+    border: 3px solid #777;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .start-node img {
+    max-width: 200%; 
+    max-height: 200%;
+    border-radius: 50%;
+  }
+
+  .mastery-node {
+    position: relative;
+    border-radius: 50%;
+    background: #333;
+    border: 2px solid #777;
+    cursor: pointer;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mastery-node img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 50%;
+  }
+
+  .mastery-node.small-button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .mastery-node.big-button {
+    width: 80px;
+    height: 80px;
+    border-width: 3px;
+  }
+
+  .mastery-node:hover {
+    border-color: #e5ff00;
+  }
+
+  .mastery-node.selected {
+      border-color: #e5ff00;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px #e5ff00;
+    z-index: 1;
+  }
+
+
+  .extra-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .final-button {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    background: #333;
+    border: 3px solid #777;
+    cursor: pointer;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative; 
+
+
+  }
+
+  .final-button img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 50%;
+  }
+
+  .final-button:hover {
+    border-color: #e5ff00;
+  }
+
+  .final-button.selected {
+    border-color: #e5ff00;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px #e5ff00;
+    z-index: 1;
+
+  }
+
+
+  .final-button.locked {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+
+  .info {
+    margin-top: 20px;
+  }
+
+  .controls {
+    margin-top: 20px;
+  }
+
+  .controls button {
+    background: #444;
+    border: 1px solid #666;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+
+  .controls button:hover {
+    background: #555;
+  }
+
+  /* Tooltip for descriptions */
+  .mastery-node[data-description]:hover::after, 
+  .final-button[data-description]:hover::after,
+  .start-node[data-description]:hover::after {
+    content: attr(data-description);
+    position: absolute;
+    background: #220025;
+    color: #ffffff;
+    padding: 5px 10px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 16px;
+    border: 1px solid #777;
+    border-radius: 5px;
+    white-space: pre-wrap; /* allows multiline */
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 5px;
+    margin-left: 100px;
+    z-index: 999;
+    min-width: 200px;
+    text-align: left;
+  }
+
+
+
+</style>
+</head>
+<body>
+
+<h1>Corepunk Weapon Mastery</h1>
+
+<!-- Class selection buttons -->
+<div class="class-select">
+    <button data-class="legionary"><img src="/classicons/legionary-icon.png" alt="legionary" style="max-width:100%; border-radius:50%;"></button>
+    <button data-class="shaman"><img src="classicons/shaman-icon.png" alt="shaman" style="max-width:100%; border-radius:50%;"></button>
+    <button data-class="destroyer"><img src="classicons/destroyer-icon.png" alt="destroyer" style="max-width:100%; border-radius:50%;"></button>
+    <button data-class="ranger"><img src="classicons/ranger-icon.png" alt="Ranger" style="max-width:100%; border-radius:50%;"></button>
+    <button data-class="infiltrator"><img src="classicons/infiltrator-icon.png" alt="infiltrator" style="max-width:100%; border-radius:50%;"></button>
+    <button data-class="blastmedic"><img src="classicons/blast-medic-icon.png" alt="blastmedic" style="max-width:100%; border-radius:50%;"></button>
+</div>
+
+<div class="container">
+  <div class="mastery-grid" id="masteryGrid"></div>
+
+  <div class="extra-column">
+    <div class="final-button" data-final="true" data-index="0"></div>
+    <div class="final-button" data-final="true" data-index="1"></div>
+  </div>
+</div>
+
+<div class="info">
+  <p>Rules:</p>
+  <ul>
+    <li>You must select all previous buttons in the row before selecting a new one.</li>
+    <li>You cannot deselect a button if any subsequent buttons in that row are still selected.</li>
+    <li>Only one of the final two buttons can be selected, and only if at least one full row is completed.</li>
+    <li>Maximum total pressed buttons: 26.</li>
+  </ul>
+  <p id="status"></p>
+</div>
+
+<div class="controls">
+  <button id="resetButton">Reset</button>
+</div>
+
+<script>
+  
+    
+  const maxSelected = 26;
+  let selectedCount = 0;
+  let finalButtonSelected = false;
+  let currentClass = null;
+
+  const statusEl = document.getElementById('status');
+  const resetButton = document.getElementById('resetButton');
+  const masteryGrid = document.getElementById('masteryGrid');
+  const classButtons = document.querySelectorAll('.class-select button');
+
+classButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    classButtons.forEach(btn => btn.classList.remove('selected'));
+    button.classList.add('selected');
+  });
+});
+  const finalButtons = document.querySelectorAll('.final-button');
+
+  // Pattern: 1 = big, 2 = small
+  const pattern = [1,2,2,1,2,2,1,2,2,1,2,2,1];
+  const ROWS = 4;
+  const classData = {
+    shaman: {
+      rows: [
+        {
+          // Row 0: Shaman Q: Rip Apart
+          startIcon: "/spells/shaman-q.png", // add the start icon here
+          startDescription: 
+            `Q: Rip Apart  
+
+            Description:The shaman quickly leaps towards the target, delivering destabilizing strikes.  
+
+The next 4 auto-attacks reduce the target's Armor and Magical Resistance by 5 units per attack for 6 seconds.  
+
+With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
+
+          nodes: [
+            {type: 'big', description: "Balance Breaker:\nInterrupts target’s ability usage.", icon: "/SHA/SQU1.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Accelerated Assault:\nAfter the leap, next 4 attacks gain +100% Attack Speed.", icon: "/SHA/SQU2.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Versatile Movement:\nCan jump to allied targets as well.", icon: "/SHA/SQU3.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Rending Knuckles:\nAttacks leave wounds dealing 100% AP over 5s.", icon: "/SHA/SQU4.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Swift Roll:\nCan use the ability again within 1s to roll behind the enemy.", icon: "/SHA/SQU5.png"},
+          ]
+        },
+        {
+          // Row 1: Update as needed
+          startIcon: "/spells/shaman-w.png",    
+          startDescription: "Base Spell Row 1 (Update me)",
+          nodes: [
+            {type: 'big', description: "Balance Breaker:\nInterrupts target’s ability usage.", icon: "/SHA/SWU1.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Accelerated Assault:\nAfter the leap, next 4 attacks gain +100% Attack Speed.", icon: "/SHA/SWU2.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Versatile Movement:\nCan jump to allied targets as well.", icon: "/SHA/SWU3.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Rending Knuckles:\nAttacks leave wounds dealing 100% AP over 5s.", icon: "/SHA/SWU4.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Swift Roll:\nCan use the ability again within 1s to roll behind the enemy.", icon: "/SHA/SWU5.png"},
+          ]
+        },
+        {
+          // Row 2: Update as needed
+          startIcon: "/spells/shaman-e.png",
+          startDescription: "Base Spell Row 2 (Update me)",
+          nodes: [
+            {type: 'big', description: "Extended Totem: Increases the totem's duration by 5 seconds.", icon: "/SHA/SEU1.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Expanded Influence: Increases the totem's effective radius by 30%."},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Fortified Totems: The shaman's totems become sturdier and gain +2 HPMax.", icon: "/SHA/SEU3.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Elemental Efficiency: There is a 10% chance that the totem won't consume a stack.", icon: "/SHA/SEU4.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Totemic Empowerment: Healing Totem - Cleanses one debuff from the shaman or an ally every 5 seconds. Fire Totem - Attacks 2 targets simultaneously. Wolf Totem - Reduces enemy MoveSpeed by 20%.", icon: "/SHA/SEU5.png"},
+          ]
+        },
+        {
+          // Row 3: Update as needed
+          startIcon: "/spells/shaman-r.png",
+          startDescription: "Base Spell Row 3 (Update me)",
+          nodes: [
+            {type: 'big', description: "Prolonged Haste: The AttackSpeed buff lasts for 15 seconds.", icon: "/SHA/SPU1.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Enhanced Charge Accumulation: Rip Apart and Lightning Strike can apply a charge of the special ability.", icon: "/SHA/SPU2.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Distance Boost: Each stack adds +1 meter range to Rip Apart and Lightning Strike.", icon: "/SHA/SPU3.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Charge Overflow: There is a 20% chance to stack 2 charges at once instead of one when gaining charges.", icon: "/SHA/SPU4.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Elemental Synergy: Fire Element - Knuckles ignite, causing the shaman to deal additional magical damage with auto-attacks (20% SpellPower). Water Element - Restores MPMax with auto-attacks (2% of damage dealt). Earth Element - Skin hardens, reducing enemy auto-attack damage by 15%.", icon: "/SHA/SPU5.png"},
+          ]
+        },
+      ],
+      final: [
+        {icon:'/SHA/SRU1.png', description:"Spirits Fusion: The spirit of the wolf inhabits the shaman, enhancing abilities. Rip Apart - Empowers the next auto-attack within 2 seconds. Totemic Fury - The shaman gains +50% to the skill's passive buffs. Lightning Strike - No cooldown, consuming 10 MPMax per second. Press Shift+R."},
+        {icon:'/SHA/SRU2.png', description:"Empowered Direwolf Form: The summoned wolf receives 10% + (1% for every 25 SpellPower) of the shaman's stats. It increases in size and generates increased threat with attacks. When recast on a friendly target, the wolf establishes a spiritual bond with them. Gains the Claw Strike ability (recast the skill on an enemy, costs 75 MPMax), which hits in a cone in front of it, dealing (40/80/120/160/200) + (40%/60%/70%/80%/90%) AttackPower and provoking affected enemies to attack it for 1 second while healing the bonded ally for (30% of damage dealt + 50% HLPower). Cooldown is 15 seconds. Consumes 10 MPMax per second. Press Shift+R."}
+      ]
+    },
+
+    legionary: {
+        rows: [
+        {
+          // Row 0: Legionary Q: Rip Apart
+          startIcon: "/spells/legionary-q.png", // add the start icon here
+          startDescription: `The Warmonger strikes enemies with their shield, dealing physical damage (⚔ Attack Power, 🛡 Armor). The impact knocks back enemies and makes them vulnerable for 3 seconds. If the ability hits an enemy casting a spell, it interrupts the spell and puts it on cooldown. Makes 130% aggro.`,
+          nodes: [
+            {type: 'big', description: "Crippling Bash: The ability slows down affected enemies by 20%.", icon: "/LEG/LQU1.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Mana Rebound: If the interrupt was successful, the Legionary restores MPMax to themselves in an amount equal to the interrupt ability's cost.", icon: "/LEG/LQU2.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Precision Slam: If the ability hits only one opponent, they are stunned for 2 seconds.", icon: "/LEG/LQU3.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Mirror Shield: After using the ability, the Legionary gains a shield for 2 seconds that reflects the damage from the next incoming ability.", icon: "/LEG/LQU4.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Earthquake: The ability can be reactivated within 2 seconds. The Legionary strikes the ground with their shield, creating a shockwave in the chosen direction that deals magic damage and knocks up all affected targets.", icon: "/LEG/LQU5.png"},
+          ]
+        },
+        {
+          // Row 1: Update as needed
+          startIcon: "/spells/legionary-w.png",    
+          startDescription: "The Warmonger throws the nearest ally or enemy to a selected area. The throw distance is calculated from the Warmonger's position. All enemies in the area take physical damage (⚔ Attack Power). The thrown enemy also takes damage and stuns all vulnerable enemies in the landing radius. The ally does not take damage.)",
+          nodes: [
+            {type: 'big', description: "Momentum Transfer: The Legionary throws an ally with precise balance, transferring the momentum of the throw to the ally. The ally's MoveSpeed is increased by 20% for 3 seconds upon landing.", icon: "/LEG/LWU1.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Impact Core: Enemies caught in the center of the affected area receive additional magic damage equal to 10% of the thrown target's maximum HPMax.", icon: "/LEG/LWU2.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Dominance: The throwing radius is doubled if the target’s maximum HPMax is less than 50% of the Legionary's maximum HPMax. ", icon: "/LEG/LWU3.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Perfected Toss: After landing, the enemy's Armor and Resist are reduced by 2% for each accumulated effect of the special ability. The debuff lasts for 3 seconds. After landing an ally, their Armor and Resist are increased by 2% for each accumulated effect of the special ability. The buff lasts for 3 seconds.", icon: "/LEG/LWU4.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Follow-Up Rush: The ability can be reactivated within 2 seconds: The Legionary makes a dash towards the thrown target.", icon: "/LEG/LWU5.png"},
+          ]
+        },
+        {
+          // Row 2: Update as needed
+          startIcon: "/spells/legionary-e.png",
+          startDescription: "The Warmonger winds up and throws a spear in the chosen direction. The spear deals physical damage (⚔ Attack Power). Every 0.5 second of wind-up increases the spear's range, damage, and 🌀 Mana cost by 10%. If the weapon hits a vulnerable enemy, it provokes them to attack the Warmonger for 2 seconds.",
+          nodes: [
+            {type: 'big', description: "Relentless Provocation: Taunts vulnerable targets for +1 second.", icon: "/LEG/LEU1.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Initial Impact: Increases the damage dealt to the first affected target by 15%.", icon: "/LEG/LEU2.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Piercing Spear: The ability ignores 20% of the enemy's Armor.", icon: "/LEG/LEU3.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Cold Steel: When the ability is on cooldown, Legionary's basic attacks deal additional physical damage (20% Armor).", icon: "/LEG/LEU4.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Spear Lunge: If the ability hits an enemy, it can be reactivated. The Legionary performs a spear lunge, dealing 70–250 (depending on hero level) physical damage. For each charge of the special ability, the lunge ignores 2% of the enemy's Armor.", icon: "/LEG/LEU5.png"},
+          ]
+        },
+        {
+          // Row 3: Update as needed
+          startIcon: "/spells/legionary-r.png",
+          startDescription: "Each basic attack adds 1% 🛡 Armor and 1% 🟣 Magic Resist to the Warmonger for 10 seconds. The effect can stack up to 10 times.Upon reaching 10 stacks, 15% of the Warmonger's 🛡 Armor and 🟣 Magic Resist are converted into ⚔ Attack Power.",
+          nodes: [
+            {type: 'big', description: "Combat Renewal: If the ability charges expire, the Legionary restores 0.5% of maximum HPMax per charge.", icon: "/LEG/LPU1.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Smell of Blood: The Legionary gains 2 charges for a kill and 1 charge for assisting in a kill.", icon: "/LEG/LPU2.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Stacking Mastery: Abilities on hit now also grant 1 stack for passive ability.", icon: "/LEG/LPU3.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Fortified Barrier: When reaching the maximum number of charges, the Legionary gains a shield with a strength of 5% of maximum HPMax + (50% (Armor + Resist)) for 5 seconds.", icon: "/LEG/LPU4.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Throwing Expert: The Legionary can activate a special ability. The Legionary’s auto-attack range is increased by 6 meters when throwing spears. The duration of this effect is increased by 1 second for each charge of the special ability.", icon: "/LEG/LPU5.png"},
+          ]
+        },
+      ],
+      final: [
+        {icon:'/LEG/LRU1.png', description:'Resilient Vigor: Using the ability removes all negative effects from the Legionary, rendering them immune to all crowd control effects and increasing the bonus attack damage gained from Armor and Resist by up to 50%. The duration of the effect is increased by 0.5 seconds for each charge of the special ability.'},
+        {icon:'/LEG/LRU2.png', description:'Sacrifice Protection: The Legionary takes less damage. Each charge of the special ability reduces incoming damage by 1%. Additionally, the Legionary can target an ally when using their ultimate ability and redirect 50% of incoming damage to themselves for the duration of the ultimate ability. Can retarget protection by pressing R. The duration of the effect is increased by 0.5 seconds for each charge of the special ability.'}
+      ]
+    },
+    
+
+    destroyer: {
+        rows: [
+        {
+          // Row 0: Shaman Q: Rip Apart
+          startIcon: "/spells/destroyer-q.png", // add the start icon here
+          startDescription: 
+            `Q: Rip Apart  
+
+            Description:The shaman quickly leaps towards the target, delivering destabilizing strikes.  
+
+The next 4 auto-attacks reduce the target's Armor and Magical Resistance by 5 units per attack for 6 seconds.  
+
+With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
+
+          nodes: [
+            {type: 'big', description: "Disrupting Blow: When hit, the skill interrupts the cast. Additionally, adds 0.2 meters to Charge distance.", icon: "/DES/DQU1.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Hamstring Cut: Enemies affected by the ability experience a 20% slowing effect. Adds 0.2 meters to Charge distance.", icon: "/DES/DQU2.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Health Shatterer: The ability deals 25% more damage to enemies with full HPMax.", icon: "/DES/DQU3.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Accumulating Power: For each target hit by the ability, the next attack of the Destroyer increases by 10% (up to a maximum of 40%).", icon: "/DES/DQU4.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Quick Reprisal: If the Destroyer hits an opponent, the ability can be reused within 2 seconds. It performs a short lunge forward, dealing physical damage (100% AttackPower) in front of the character.", icon: "/DES/DQU5.png"},
+          ]
+        },
+        {
+          // Row 1: Update as needed
+          startIcon: "/spells/destroyer-w.png",    
+          startDescription: "Base Spell Row 1 (Update me)",
+          nodes: [
+            {type: 'big', description: "Chargedrive: For each opponent hit by the ability, the Destroyer gains a charge for the passive skill (up to a maximum of 3 charges per strike). Adds 2% to damage in the outer radius zone.", icon: "/DES/DWU1.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Timecut: For each opponent hit, the ability's cooldown is reduced by 0.5 seconds (maximum reduction: 3 seconds per single use). Adds 2% to damage in the outer radius zone.", icon: "/DES/DWU2.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Epicenter: Opponents in the center of the area will be rooted for 2 seconds.", icon: "/DES/DWU3.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Cure Edge: The Destroyer restores HPMax equal to 10% of the damage dealt when hitting opponents on the edge of the area of effect. Adds 2% to damage in the outer radius zone.", icon: "/DES/DWU4.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Blade Throw: If the ability hits an enemy, it can be used again within 2 seconds. The Destroyer throws their weapon in the chosen direction, dealing physical damage (100% AttackPower) to the first enemy hit.", icon: "/DES/DWU5.png"},
+          ]
+        },
+        {
+          // Row 2: Update as needed
+          startIcon: "/spells/destroyer-e.png",
+          startDescription: "Base Spell Row 2 (Update me)",
+          nodes: [
+            {type: 'big', description: "Endless Empowerment: Increases the duration of the buff by 5 seconds.", icon: "/DES/DEU1.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Self-Confidence: Increases the bonus AttackPower and bonus HPMax gained by 5%.", icon: "/DES/DEU2.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Thunderous Roar: The ability becomes AoE: In the area of effect, enemies lose 15% Armor and 15% Resist.", icon: "/DES/DEU3.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Commanding Shout: The Destroyer becomes enraged and gains 10% resistance to crowd control effects.", icon: "/DES/DEU4.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Unchained: Removes all slowing effects. Nearby allies also gain the enhancement effects.", icon: "/DES/DEU5.png"},
+          ]
+        },
+        {
+          // Row 3: Update as needed
+          startIcon: "/spells/destroyer-r.png",
+          startDescription: "Base Spell Row 3 (Update me)",
+          nodes: [
+            {type: 'big', description: "Ronin's Stoicism: During the ability's duration, the Destroyer takes 20% less damage.", icon: "/DES/DPU1.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Unbound Mobility: During the ability's duration, the Destroyer gains 50% resistance to slowing effects.", icon: "/DES/DPU2.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Sudden Death: For each target hit by the ability, the Destroyer gains +10% MoveSpeed.", icon: "/DES/DPU3.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Armor Grinder: Enemies damaged by the ability lose 5% Armor for 3 seconds. The effect can stack up to 6 times.", icon: "/DES/DPU4.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Whirling Booster: Increases the duration of the ability by 3 seconds.", icon: "/DES/DPU5.png"},
+          ]
+        },
+      ],
+      final: [
+        {icon:'/DES/DRU1.png', description:'Shockwave Recoil: After landing, all enemies within 2 meters outside of the damage radius are knocked back, and the Destroyer receives 50% SlowResistance for 3 seconds.'},
+        {icon:'/DES/DRU2.png', description:'Dead Vacuum: The area of effect is expanded by 2 meters. The Destroyer pulls nearby enemies towards them, dealing physical damage and rooting them for 3 seconds.'}
+      ]
+    },
+
+    ranger: {
+        rows: [
+        {
+          // Row 0: Shaman Q: Rip Apart
+          startIcon: "/spells/ranger-q.png", // add the start icon here
+          startDescription: 
+            `Q: Rip Apart  
+
+            Description:The shaman quickly leaps towards the target, delivering destabilizing strikes.  
+
+The next 4 auto-attacks reduce the target's Armor and Magical Resistance by 5 units per attack for 6 seconds.  
+
+With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
+
+          nodes: [
+            {type: 'big', description: "Disrupting Blow Desc: When hit, the skill interrupts the cast. Level: +0.2 meter to Charge distance.", icon: "/RAN/RQU1.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Hamstring Cut Desc: Enemies affected by the ability experience a 20% slowing effect. Level: +0.2 meter to Charge distance.", icon: "/RAN/RQU2.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Health Shatterer Desc: The ability deals 25% more damage to enemies with full HPMax.", icon: "/RAN/RQU3.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Accumulating Power Desc: For each target hit by the ability, the next attack of the Destroyer increases by 10%. (Maximum 40%).", icon: "/RAN/RQU4.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Quick Reprisal Desc: If the Destroyer hits an opponent, the ability can be reused within 2 seconds. It performs a short lunge forward, dealing physical damage (100% AttackPower) in front of the character.", icon: "/RAN/RQU5.png"},
+          ]
+        },
+        {
+          // Row 1: Update as needed
+          startIcon: "/spells/ranger-w.png",    
+          startDescription: "Base Spell Row 1 (Update me)",
+          nodes: [
+            {type: 'big', description: "Balance Breaker:\nInterrupts target’s ability usage.", icon: "/RAN/RWWU1.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Accelerated Assault:\nAfter the leap, next 4 attacks gain +100% Attack Speed.", icon: "/RAN/RWWU2.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Versatile Movement:\nCan jump to allied targets as well.", icon: "/RAN/RWWU3.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Rending Knuckles:\nAttacks leave wounds dealing 100% AP over 5s.", icon: "/RAN/RWWU4.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Swift Roll:\nCan use the ability again within 1s to roll behind the enemy.", icon: "/RAN/RWWU5.png"},
+          ]
+        },
+        {
+          // Row 2: Update as needed
+          startIcon: "/spells/ranger-e.png",
+          startDescription: "Base Spell Row 2 (Update me)",
+          nodes: [
+            {type: 'big', description: "Balance Breaker:\nInterrupts target’s ability usage.", icon: "/RAN/RWU1.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Accelerated Assault:\nAfter the leap, next 4 attacks gain +100% Attack Speed.", icon: "/RAN/RWU2.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Versatile Movement:\nCan jump to allied targets as well.", icon: "/RAN/RWU3.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Rending Knuckles:\nAttacks leave wounds dealing 100% AP over 5s.", icon: "/RAN/RWU4.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Swift Roll:\nCan use the ability again within 1s to roll behind the enemy.", icon: "/RAN/RWU5.png"},
+          ]
+        },
+        {
+          // Row 3: Update as needed
+          startIcon: "/spells/ranger-r.png",
+          startDescription: "Base Spell Row 3 (Update me)",
+          nodes: [
+            {type: 'big', description: "Arrow Chaser: The Ranger moves 15% faster when moving towards a target with 5 or more arrows.", icon: "/RAN/REU1.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Follow-up Shaft: Increases the chance a target will be hit by an additional arrow by 10%.", icon: "/RAN/REU2.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Vital Quiver Restoration: Upon activating the ability, the Ranger restores 0.5% of their maximum HPMax for each arrow.", icon: "/RAN/REU3.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Mana Drain Barrage: If a target has the maximum amount of arrows stacked, they will slowly drain 1 mana per arrow per second.", icon: "/RAN/REU4.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Hexashot Enhancement: At 6 stacks of the special ability, the Ranger's auto-attacks deal additional magic damage (15% SpellPower).", icon: "/RAN/REU5.png"},
+          ]
+        },
+      ],
+      final: [
+        {icon:'/RAN/RRU1.png', description:"Fire Volley: A shot with fiery arrows. At the landing point of the arrows (at the end of the cone), a fiery wall appears. Enemies passing through it take magical damage (40% SpellPower) each second and ignite, receiving magical damage over time (100% SpellPower) for 5 seconds."},
+        {icon:'/RAN/RRU2.png', description:"Blaze Rebounder: After a successful rebound, the ability can be activated again. The Ranger performs a powerful fire shot in the specified direction. The shot deals physical damage (140% AttackPower) to the first target hit and leaves behind 3 charges of the passive ability."}
+      ]
+    },
+
+    infiltrator: {
+        rows: [
+        {
+          // Row 0: Shaman Q: Rip Apart
+          startIcon: "/spells/infiltrator-q.png", // add the start icon here
+          startDescription: 
+            `Q: Rip Apart  
+
+            Description:The shaman quickly leaps towards the target, delivering destabilizing strikes.  
+
+The next 4 auto-attacks reduce the target's Armor and Magical Resistance by 5 units per attack for 6 seconds.  
+
+With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
+
+          nodes: [
+            {type: 'big', description: "Shadow Grace: MoveSpeedFinalKPositive in camouflage is increased by 20%.", icon: "/INF/IQU1.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Flurry: When leaving invisibility, AttackSpeed is increased by 20% for 4 seconds.", icon: "/INF/IQU2.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Vanish Device: The new generation camouflage device allows for instant invisibility.", icon: "/INF/IQU3.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Advanced Cloaking Algorithm: Upgraded camouflage enables the Infiltrator to sneak closer to enemies.", icon: "/INF/IQU4.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Ambush: The Infiltrator has learned the Ambush skill. While in camouflage, the Infiltrator can deliver a powerful strike to an enemy. This attack always deals critical damag", icon: "/INF/IQU5.png"},
+          ]
+        },
+        {
+          // Row 1: Update as needed
+          startIcon: "/spells/infiltrator-w.png",    
+          startDescription: "Base Spell Row 1 (Update me)",
+          nodes: [
+            {type: 'big', description: "Stunning Grenade: If the mine lands on an enemy, they will be stunned for 2 seconds.", icon: "/INF/IWU1.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Dazzler: The Infiltrator uses an advanced version of the mine with a flash effect. Enemies caught in the blast radius are blinded for 2 seconds.", icon: "/INF/IWU2.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Minefield Deployment: Up to 3 mines can be active simultaneously.", icon: "/INF/IWU3.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Stealthy Sabotage: The Infiltrator can throw a mine from stealth without breaking it.", icon: "/INF/IWU4.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Chain Reaction: Press Shift+W to cause mines within a 14-meter radius to rise into the air (0.3 seconds) and explode, doubling their blast radius. When hit by more than one mine, only 25% of the damage from each additional mine is counted.", icon: "/INF/IWU5.png"},
+          ]
+        },
+        {
+          // Row 2: Update as needed
+          startIcon: "/spells/infiltrator-e.png",
+          startDescription: "Base Spell Row 2 (Update me)",
+          nodes: [
+            {type: 'big', description: "Blitz: MoveSpeedFinalKPositive increases by 20% towards the rooted target. Activates from 2 meters and farther.", icon: "/INF/IEU1.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Defense Breakthrough: While the target is rooted, its defense stats are reduced by 30%.", icon: "/INF/IEU2.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Extended Payload: The Infiltrator grenade cluster now has twice as many grenades. (Blast radius increased by 1 meter.)", icon: "/INF/IEU3.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Static Field: After the explosion, an electric zone remains, dealing damage every second equivalent to 30% of SpellPower to all enemies within it for 5 seconds.", icon: "/INF/IEU4.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Interdiction Protocol: If a healing or shield spell is applied to the rooted target, the caster will be rooted for 2 seconds, silenced for 5 seconds, and their abilities will be interrupted.", icon: "/INF/IEU5.png"},
+          ]
+        },
+        {
+          // Row 3: Update as needed
+          startIcon: "/spells/infiltrator-r.png",
+          startDescription: "Base Spell Row 3 (Update me)",
+          nodes: [
+            {type: 'big', description: "Toxic Blades: The Infiltrator poisons the daggers before throwing, causing enemies to take additional damage equal to 20% SpellPower over 7 seconds. This effect can sta", icon: "/INF/IPU1.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Lethal Precision: If the dagger hits from behind, the damage will always be critical.", icon: "/INF/IPU2.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Fleet Footwork: For each dagger that hits the target, the Infiltrator gains a 10% MoveSpeed increase for 5 seconds.", icon: "/INF/IPU3.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Hemorrhage: If both daggers hit one target, the Infiltrator starts to drain life from the target through the daggers, draining 2% of the target's maximum Health each second.", icon: "/INF/IPU4.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Elimination: Recast T: With shadow chains, the Infiltrator pulls daggers back from the victim, dealing 60% SpellPower damage for each dagger and causing a Bleed effect that deals 30% AttackPower damage per second for 5 seconds. Additionally, it removes any disarm effect from the Bomber.", icon: "/INF/IPU5.png"},
+          ]
+        },
+      ],
+      final: [
+        {icon:'/INF/IRU1.png', description:"Shadow Step: The Infiltrator shadow steps behind the enemy and delivers a dual dagger strike that deals 100% AttackPower. The skill has 3 charges. If the target's HPMax is at 20% or below, the Infiltrator deals 20% more damage."},
+        {icon:'/INF/IRU2.png', description:"Fade Away: After using the ultimate ability, if the skill hasn't recharged, the Infiltrator can enter stealth for 7 seconds within the next 2 seconds. This removes all aggro."}
+
+      ]
+    },
+
+    blastmedic: {
+        rows: [
+        {
+          // Row 0: Shaman Q: Rip Apart
+          startIcon: "/spells/blast-medic-q.png", // add the start icon here
+          startDescription: 
+            `Q: Rip Apart  
+
+            Description:The shaman quickly leaps towards the target, delivering destabilizing strikes.  
+
+The next 4 auto-attacks reduce the target's Armor and Magical Resistance by 5 units per attack for 6 seconds.  
+
+With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
+
+          nodes: [
+            {type: 'big', description: "Rebound Precision: Increases the projectile's bounces by 1.", icon: "/BLA/BQU1.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Walking Arsenal: Blast Medic can move while using this skill, but MoveSpeed is reduced by 30%.", icon: "/BLA/BQU2.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Extended Ricochet: Increases the ricochet range to the next target by 1 meter.", icon: "/BLA/BQU3.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Fearsome Mines: Each ricochet attaches a mine to the enemy for 5 seconds, which activates 2 seconds after the ricochet. The mine will detonate on the enemy if the Blast Medic shoots it with an auto-attack, dealing magical damage (50% SpellPower). The detonation will fear the target for 2 seconds. The mine can be dispelled.", icon: "/BLA/BQU4.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Shielding Echo: Each ricochet attaches a mine to an ally for 5 seconds, which activates 2 seconds after the last ricochet. The Blast Medic can reuse the ability to activate a shield on allies (150% HLPower) that absorbs damage for 5 seconds. The mine can be dispelled.", icon: "/BLA/BQU5.png"},
+          ]
+        },
+        {
+          // Row 1: Update as needed
+          startIcon: "/spells/blast-medic-w.png",    
+          startDescription: "Base Spell Row 1 (Update me)",
+          nodes: [
+            {type: 'big', description: "Speed Guard: While the shield from this ability is active, the target receives a 30% reduction in slowing effects.", icon: "/BLA/BWU1.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Shattering Blast: Reduces Armor and Resist of enemies hit by the explosion by 20% for 5 seconds.", icon: "/BLA/BWU2.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Prolonged Blindness: Blind effect duration is increased by 1 second.", icon: "/BLA/BWU3.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Enhanced Blast Zone: The blast radius is increased, and damage and shield effects are enhanced by 20% at the center of the area.", icon: "/BLA/BWU4.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Smoke Screen Tactics: After exploding, the bomb turns into a smoke bomb, dispersing a thick smoke cloud in the blast area for 5 seconds. The Blast Medic is invisible to enemies while in this cloud. If an enemy enters the smoke cloud, they will see the Bomber and can attack them.", icon: "/BLA/BWU5.png"},
+          ]
+        },
+        {
+          // Row 2: Update as needed
+          startIcon: "/spells/blast-medic-e.png",
+          startDescription: "Base Spell Row 2 (Update me)",
+          nodes: [
+            {type: 'big', description: "Regenerative Impact: When the clone hits enemies, the Blast Medic restores 5% + (1% for every 20 HLPower) health.", icon: "/BLA/BEU1.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Explosive Swap: At the moment of teleportation, a blast occurs at the clone's location, dealing magical damage equal to 100% SpellPower.", icon: "/BLA/BEU2.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Stunning Transposition: When the Blast Medic teleports through an enemy, the enemy is stunned for 2 seconds.", icon: "/BLA/BEU3.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Controlled Decoy: The Blast Medic can control their clone. Automatically teleport by using Shift+E.", icon: "/BLA/BEU4.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Twin Swap Sequence: Can re-use the ability within 2 seconds to swap places with the clone back.", icon: "/BLA/BEU5.png"},
+          ]
+        },
+        {
+          // Row 3: Update as needed
+          startIcon: "/spells/blast-medic-r.png",
+          startDescription: "Base Spell Row 3 (Update me)",
+          nodes: [
+            {type: 'big', description: "Speed Surge Protocol Desc: Activating one of the modes increases the Blast Medic's MoveSpeedFinalKPositive by 20% for 3 seconds.", icon: "/BLA/BPU1.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Threat Reduction Burst Desc: Activating a mode causes an energy burst and reduces the Blast Medic's aggro by 10%.", icon: "/BLA/BPU2.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Malfunction: All Modes Engaged Desc: When selecting a mode, there is a 10% chance of a malfunction. The glitch causes all 3 modes to be activated simultaneously.", icon: "/BLA/BPU3.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Upgraded Firmware Desc: Increases healing and damage effects by 10% and grants an additional auto-attack.", icon: "/BLA/BPU4.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'small', description: "empty", icon: "/spells/plus.png"},
+            {type: 'big', description: "Swift Activation Reset Desc: The ability can be used again within 2 seconds. The mode that was last selected will be chosen automatically. The cost of reusing the ability is 20% of the current MPMax pool, but not less than 20 MPMax.", icon: "/BLA/BPU5.png"},
+          ]
+        },
+      ],
+      final: [
+        {icon:'/BLA/BRU1.png', description:"Omni-Assist Module: - Removes all crowd control effects from an ally. - While the Blast Medic is under the shield, they regenerate health at 2% of maximum HPMax per second. - While the enemy is under the drone's effect, they take 15% more incoming damage."},
+        {icon:'/BLA/BRU2.png', description:"Fear Cascade Detonation Device: The Blast Medic throws a drone at the target, dealing damage (150% AttackPower and 150% SpellPower) and causing fear for 2 seconds. After the debuff expires, the drone detonates (radius 2m), dealing damage (150% AttackPower and 150% SpellPower) and causing fear for 2 seconds to all enemies within the explosion radius."}
+      ]
+    },
+  };
+
+  
+
+  function generateGrid(cls) {
+    masteryGrid.innerHTML = '';
+    const data = classData[cls];
+    data.rows.forEach((rowData, r) => {
+      const rowDiv = document.createElement('div');
+      rowDiv.classList.add('mastery-row');
+      rowDiv.setAttribute('data-row', r);
+
+      // Start node with icon and description
+      const startNode = document.createElement('div');
+      startNode.classList.add('start-node');
+      startNode.setAttribute('data-description', rowData.startDescription);
+      if (rowData.startIcon) {
+        const startImg = document.createElement('img');
+        startImg.src = rowData.startIcon;
+        startImg.alt = "Start Spell Icon";
+        startNode.appendChild(startImg);
+      }
+      rowDiv.appendChild(startNode);
+
+      const startConnector = document.createElement('div');
+      startConnector.classList.add('node-connector');
+      rowDiv.appendChild(startConnector);
+
+      // Nodes
+      rowData.nodes.forEach((nodeData, p) => {
+        const node = document.createElement('div');
+        node.classList.add('mastery-node');
+        node.setAttribute('data-row', r);
+        node.setAttribute('data-index', p);
+
+        if (nodeData.type === 'big') {
+          node.classList.add('big-button');
+        } else {
+          node.classList.add('small-button');
+        }
+
+        node.setAttribute('data-description', nodeData.description);
+
+        const img = document.createElement('img');
+        img.src = nodeData.icon;
+        img.alt = "Ability Icon";
+        node.appendChild(img);
+
+        rowDiv.appendChild(node);
+
+        if (p < pattern.length - 1) {
+          const connector = document.createElement('div');
+          connector.classList.add('node-connector');
+          rowDiv.appendChild(connector);
+        }
+      });
+
+      masteryGrid.appendChild(rowDiv);
+    });
+
+    // Final buttons
+    data.final.forEach((fData, i) => {
+      const btn = finalButtons[i];
+      btn.classList.remove('selected', 'locked');
+      btn.setAttribute('data-description', fData.description);
+      btn.querySelectorAll('img').forEach(img => img.remove());
+      const icon = document.createElement('img');
+      icon.src = fData.icon;
+      icon.alt = "Final Option";
+      btn.appendChild(icon);
+    });
+
+    attachNodeListeners();
+    selectedCount = 0;
+    finalButtonSelected = false;
+    updateStatus();
+  }
+
+  function attachNodeListeners() {
+    const allNodes = document.querySelectorAll('.mastery-node');
+    allNodes.forEach(node => {
+      node.removeEventListener('click', onNodeClick);
+      node.addEventListener('click', onNodeClick);
+    });
+  }
+
+  function onNodeClick(e) {
+    const node = e.currentTarget;
+    const row = node.getAttribute('data-row');
+    const index = parseInt(node.getAttribute('data-index'), 10);
+    const rowNodes = Array.from(document.querySelectorAll(`.mastery-node[data-row="${row}"]`));
+
+    if (selectedCount >= maxSelected && !node.classList.contains('selected')) {
+      return; // max reached
+    }
+
+    if (node.classList.contains('selected')) {
+      // Deselecting: check subsequent nodes
+      for (let i = index + 1; i < rowNodes.length; i++) {
+        if (rowNodes[i].classList.contains('selected')) {
+          return;
+        }
+      }
+      node.classList.remove('selected');
+      selectedCount--;
+    } else {
+      // Selecting: check all previous nodes
+      for (let i = 0; i < index; i++) {
+        if (!rowNodes[i].classList.contains('selected')) {
+          return;
+        }
+      }
+      node.classList.add('selected');
+      selectedCount++;
+    }
+    
+
+    updateStatus();
+  }
+
+  finalButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (!currentClass) return;
+      if (selectedCount >= maxSelected && !btn.classList.contains('selected')) {
+        return;
+      }
+
+      if (!anyRowFullySelected()) {
+        return;
+      }
+
+      if (finalButtonSelected && !btn.classList.contains('selected')) {
+        return;
+      }
+
+      if (btn.classList.contains('selected')) {
+        btn.classList.remove('selected');
+        selectedCount--;
+        finalButtonSelected = false;
+      } else {
+        btn.classList.add('selected');
+        selectedCount++;
+        finalButtonSelected = true;
+        finalButtons.forEach(other => {
+          if (other !== btn) {
+            other.classList.add('locked');
+          }
+        });
+      }
+
+      if (!finalButtonSelected) {
+        finalButtons.forEach(b => b.classList.remove('locked'));
+      }
+
+      updateStatus();
+    });
+  });
+
+  function isRowFullySelected(rowIndex) {
+    const rowNodes = document.querySelectorAll(`.mastery-node[data-row="${rowIndex}"]`);
+    for (let n of rowNodes) {
+      if (!n.classList.contains('selected')) return false;
+    }
+    return true;
+  }
+
+  function anyRowFullySelected() {
+    for (let i = 0; i < ROWS; i++) {
+      if (isRowFullySelected(i)) return true;
+    }
+    return false;
+  }
+
+  function updateStatus() {
+    statusEl.textContent = `Selected: ${selectedCount}/${maxSelected}`;
+  }
+
+  function resetAll() {
+    if (!currentClass) return;
+    const allNodes = document.querySelectorAll('.mastery-node');
+    allNodes.forEach(node => {
+      node.classList.remove('selected');
+    });
+
+    finalButtons.forEach(btn => {
+      btn.classList.remove('selected');
+      btn.classList.remove('locked');
+    });
+
+    selectedCount = 0;
+    finalButtonSelected = false;
+    updateStatus();
+  }
+
+  resetButton.addEventListener('click', resetAll);
+
+  classButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const cls = btn.getAttribute('data-class');
+      currentClass = cls;
+      generateGrid(cls);
+    });
+  });
+</script>
+
+</body>
+</html>

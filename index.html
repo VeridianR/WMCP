@@ -964,30 +964,34 @@ classButtons.forEach(button => {
     const index = parseInt(node.getAttribute('data-index'), 10);
     const rowNodes = Array.from(document.querySelectorAll(`.mastery-node[data-row="${row}"]`));
 
-    if (selectedCount >= maxSelected && !node.classList.contains('selected')) {
-      return; // max reached
-    }
+  if (node.classList.contains('selected')) {
+        // Deselecting: check subsequent nodes
+        for (let i = index + 1; i < rowNodes.length; i++) {
+            if (rowNodes[i].classList.contains('selected')) {
+                return;
+            }
+        }
+        node.classList.remove('selected');
+        selectedCount--;
 
-    if (node.classList.contains('selected')) {
-      // Deselecting: check subsequent nodes
-      for (let i = index + 1; i < rowNodes.length; i++) {
-        if (rowNodes[i].classList.contains('selected')) {
-          return;
+        // Uncheck final button if the full row is not selected
+        if (!isRowFullySelected(row)) {
+            finalButtons.forEach(btn => {
+                btn.classList.remove('selected');
+                btn.classList.remove('locked');
+            });
+            finalButtonSelected = false;
         }
-      }
-      node.classList.remove('selected');
-      selectedCount--;
     } else {
-      // Selecting: check all previous nodes
-      for (let i = 0; i < index; i++) {
-        if (!rowNodes[i].classList.contains('selected')) {
-          return;
+        // Selecting: check all previous nodes
+        for (let i = 0; i < index; i++) {
+            if (!rowNodes[i].classList.contains('selected')) {
+                return;
+            }
         }
-      }
-      node.classList.add('selected');
-      selectedCount++;
+        node.classList.add('selected');
+        selectedCount++;
     }
-    
 
     updateStatus();
   }

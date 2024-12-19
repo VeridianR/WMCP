@@ -337,14 +337,7 @@ classButtons.forEach(button => {
         {
           // Row 0: Shaman Q: Rip Apart
           startIcon: "spells/shaman-q.png", // add the start icon here
-          startDescription: 
-            `Q: Rip Apart  
-
-            Description:The shaman quickly leaps towards the target, delivering destabilizing strikes.  
-
-The next 4 auto-attacks reduce the target's Armor and Magical Resistance by 5 units per attack for 6 seconds.  
-
-With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
+          startDescription:"Q: The shaman quickly leaps towards the target, preparing to deliver a series of destabilizing strikes. The next 4 auto-attacks reduce the target's armor and magical resistance by 5 units per auto-attack for 6 seconds. With 5 charges of elemental power, the target is immobilized for 2 seconds. Consumes all charges of the special ability. Details Cast time: 0.3 s Range: 5 Armor and magic resistance reduction: 2  / 3  / 4  / 5  / 6 Cost: 12  / 17  / 22  / 27  / 32 Mana Cooldown: 8 s",
 
           nodes: [
             {type: 'big', description: "Balance Breaker:\nInterrupts target’s ability usage.", icon: "SHA/SQU1.png"},
@@ -365,7 +358,7 @@ With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
         {
           // Row 1: Update as needed
           startIcon: "spells/shaman-w.png",    
-          startDescription: "Base Spell Row 1 (Update me)",
+          startDescription: "W: Passive: Through meditation, the shaman increases both his and the wolf's attack speed and movement speed. Active: With 5 charges of elemental power, the shaman can activate the skill and summon a totem within a 6-meter radius for 8 seconds. The type of totem depends on the chosen element in a special skill: Fire element - Fire Totem. Deals magical damage to enemy within an 8-meter radius every 0.75 seconds. Water element - Healing Totem. Restores health to the Shaman and his allies within a 8-meter radius every 0.75 seconds. Earth element - Wolf Totem. Enhances the shaman's attacks within an 8-meter radius. Allies receive 50% of the enhancements. The totem consumes all charges of the special ability. Details Cast time: instant Increased attack speed: 3  / 6  / 9  / 12  / 15 % Movement speed increased: 1  / 2  / 3  / 4  / 5 % Cost: 12  / 15  / 18  / 21  / 24 Mana Cooldown: 9 s",
           nodes: [
             {type: 'big', description: "Extended Totem: Increases the totem's duration by 5 seconds.", icon: "SHA/SWU1.png"},
             {type: 'small', description: "empty", icon: "spells/plus.png"},
@@ -385,7 +378,7 @@ With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
         {
           // Row 2: Update as needed
           startIcon: "spells/shaman-e.png",
-          startDescription: "Base Spell Row 2 (Update me)",
+          startDescription: "E: The shaman gathers electricity from the atmosphere and releases lightning at the target, dealing magical damage (Spell Power). With 5 charges of elemental power, the cast is instant. Consumes all charges of the special ability. Details Cast time: 1.2 s Damage: 15  / 20  / 25  / 30  / 35 Cost: 10  / 15  / 20  / 25  / 30 Mana Cooldown: 5 s",
           nodes: [
             {type: 'big', description: "Lightning Recoil: The first target hit by the lightning is knocked back 1 meter.", icon: "SHA/SEU1.png"},
             {type: 'small', description: "empty", icon: "spells/plus.png"},
@@ -405,7 +398,7 @@ With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
         {
           // Row 3: Update as needed
           startIcon: "PFEC.png",
-          startDescription: "Base Spell Row 3 (Update me)",
+          startDescription: "PASSIVE: Every 3rd auto-attack, the shaman increases his attack speed by 5% for 7 seconds and gains a charge of the elemental power. When the number of charges reaches 5, the shaman can summon the forces of the elements to his aid and improve his skills. By activating the special ability, the shaman switches between the elements of fire, water, and earth over 1.5 seconds.",
           nodes: [
             {type: 'big', description: "Prolonged Haste: The AttackSpeed buff lasts for 15 seconds.", icon: "SHA/SPU1.png"},
             {type: 'small', description: "empty", icon: "spells/plus.png"},
@@ -434,7 +427,7 @@ With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
         {
           // Row 0: Legionary Q: Rip Apart
           startIcon: "spells/legionary-q.png", // add the start icon here
-          startDescription: `The Warmonger strikes enemies with their shield, dealing physical damage (⚔ Attack Power, 🛡 Armor). The impact knocks back enemies and makes them vulnerable for 3 seconds. If the ability hits an enemy casting a spell, it interrupts the spell and puts it on cooldown. Makes 130% aggro.`,
+          startDescription: "Q: The Legionary strikes enemies with their shield, dealing physical damage (Attack Power, Armor). The impact knocks back enemies and makes them vulnerable for 3 seconds. If the ability hits an enemy casting a spell, it interrupts the spell and puts it on cooldown. Causes 130% aggro. Weapon Specialization Bonus +0.5 seconds to vulnerability effect duration. Details Cast time: instant Range: 2.5 Damage: 20 / 35  / 50  / 65  / 80 Cost: 5  / 10  / 15  / 20  / 25 Mana Cooldown: 14  / 13  / 12  / 11  / 10 s",
           nodes: [
             {type: 'big', description: "Crippling Bash: The ability slows down affected enemies by 20%.", icon: "LEG/LQU1.png"},
             {type: 'small', description: "empty", icon: "spells/plus.png"},
@@ -454,7 +447,7 @@ With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
         {
           // Row 1: Update as needed
           startIcon: "spells/legionary-w.png",    
-          startDescription: "The Warmonger throws the nearest ally or enemy to a selected area. The throw distance is calculated from the Warmonger's position. All enemies in the area take physical damage (⚔ Attack Power). The thrown enemy also takes damage and stuns all vulnerable enemies in the landing radius. The ally does not take damage.)",
+          startDescription: "W: The Legionary throws the nearest ally or enemy to a target area. All enemies in that area take physical damage (Attack Power). The tossed enemy also takes damage and stuns all vulnerable enemies for 2 seconds within a 2.5m radius. The tossed ally takes no damage. Weapon Specialization Bonus +0.2 meters to throw distance. Details Cast time: instant Range: 8 Cost: 5  / 10  / 15  / 20  / 25 Cooldown: 18  / 16  / 14  / 12  / 10 Mana",
           nodes: [
             {type: 'big', description: "Momentum Transfer: The Legionary throws an ally with precise balance, transferring the momentum of the throw to the ally. The ally's MoveSpeed is increased by 20% for 3 seconds upon landing.", icon: "LEG/LWU1.png"},
             {type: 'small', description: "empty", icon: "spells/plus.png"},
@@ -474,7 +467,7 @@ With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
         {
           // Row 2: Update as needed
           startIcon: "spells/legionary-e.png",
-          startDescription: "The Warmonger winds up and throws a spear in the chosen direction. The spear deals physical damage (⚔ Attack Power). Every 0.5 second of wind-up increases the spear's range, damage, and 🌀 Mana cost by 10%. If the weapon hits a vulnerable enemy, it provokes them to attack the Warmonger for 2 seconds.",
+          startDescription: ": The Legionary readies and throws a spear in a target direction. The throw gains extra range, damage, and mana cost the longer the Legionary spends preparing to launch the spear. It deals physical damage (Attack Power) to all enemies in its path. If the spear hits a vulnerable enemy, it taunts them, forcing them to attack the Legionary for 2 seconds. Weapon Specialization Bonus +0.3 meters to spear throw distance. Details Cast time: 4 s Range: 6-12 Damage: 20  / 40  / 60  / 80  / 100 Damage increased: up to 50% Cost: 7  / 12  / 17  / 22  / 27 Mana Cooldown: 16  / 14  / 12  / 10  / 8 s",
           nodes: [
             {type: 'big', description: "Relentless Provocation: Taunts vulnerable targets for +1 second.", icon: "LEG/LEU1.png"},
             {type: 'small', description: "empty", icon: "spells/plus.png"},
@@ -494,7 +487,7 @@ With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
         {
           // Row 3: Update as needed
           startIcon: "PFEC.png",
-          startDescription: "Each basic attack adds 1% 🛡 Armor and 1% 🟣 Magic Resist to the Warmonger for 10 seconds. The effect can stack up to 10 times.Upon reaching 10 stacks, 15% of the Warmonger's 🛡 Armor and 🟣 Magic Resist are converted into ⚔ Attack Power.",
+          startDescription: "PASSIVE: Each time the Legionary hits a target with an attack, they gain 1% Armor and 1% Magic Resist for 10 seconds. The effect can stack up to 10 times. When the Legionary has 10 stacks, part of the Legionary's Armor and Magic Resist is converted into Attack Power Bonus. Weapon Specialization Bonus +0.5% to total armor resistance.",
           nodes: [
             {type: 'big', description: "Combat Renewal: If the ability charges expire, the Legionary restores 0.5% of maximum HPMax per charge.", icon: "LEG/LPU1.png"},
             {type: 'small', description: "empty", icon: "spells/plus.png"},
@@ -524,14 +517,7 @@ With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
         {
           // Row 0: Shaman Q: Rip Apart
           startIcon: "spells/destroyer-q.png", // add the start icon here
-          startDescription: 
-            `Q: Rip Apart  
-
-            Description:The shaman quickly leaps towards the target, delivering destabilizing strikes.  
-
-The next 4 auto-attacks reduce the target's Armor and Magical Resistance by 5 units per attack for 6 seconds.  
-
-With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
+          startDescription:"Q: The Destroyer dashes to a target area and deals physical damage (Attack Power) in an area in front of them. Details Cast time: instant Range: 6 Damage: 20  / 40  / 60  / 80  / 100 Cost: 5  / 10  / 15  / 20  / 25 Mana Cooldown: 14  / 13  / 12  / 11  / 10 s",
 
           nodes: [
             {type: 'big', description: "Disrupting Blow: When hit, the skill interrupts the cast. Additionally, adds 0.2 meters to Charge distance.", icon: "DES/DQU1.png"},
@@ -552,7 +538,7 @@ With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
         {
           // Row 1: Update as needed
           startIcon: "spells/destroyer-w.png",    
-          startDescription: "Base Spell Row 1 (Update me)",
+          startDescription: "W: The Destroyer performs a circular strike, dealing physical damage (Attack Power). The area has two radius zones of impact. Opponents caught in the outer ring of impact receive 30% additional damage. Details Cast time: 0.8 s Range: 7 Damage: 30  / 50  / 70  / 90  / 110 Cost: 10  / 15  / 20  / 25  / 30 Mana Cooldown: 10  / 9  / 8  / 7  / 6 s",
           nodes: [
             {type: 'big', description: "Chargedrive: For each opponent hit by the ability, the Destroyer gains a charge for the passive skill (up to a maximum of 3 charges per strike). Adds 2% to damage in the outer radius zone.", icon: "DES/DWU1.png"},
             {type: 'small', description: "empty", icon: "spells/plus.png"},
@@ -572,7 +558,7 @@ With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
         {
           // Row 2: Update as needed
           startIcon: "spells/destroyer-e.png",
-          startDescription: "Base Spell Row 2 (Update me)",
+          startDescription: "E: The Destroyer lets out a roar and gains a buff for 10 seconds, increasing their Health and Attack Power(Spell Power). Details Cast time: instant Range: 3 Health increased: 80  / 110  / 140  / 170  / 200 Attack power and health increased: 6  / 7  / 8  / 9  / 10 Cost: 10  / 15  / 20  / 25  / 30 Mana Cooldown: 25 s",
           nodes: [
             {type: 'big', description: "Endless Empowerment: Increases the duration of the buff by 5 seconds.", icon: "DES/DEU1.png"},
             {type: 'small', description: "empty", icon: "spells/plus.png"},
@@ -592,7 +578,7 @@ With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
         {
           // Row 3: Update as needed
           startIcon: "PFEC.png",
-          startDescription: "Base Spell Row 3 (Update me)",
+          startDescription: "PASSIVE: For each auto-attack or ability use that hit the enemy, the Destroyer receives a 1% (Attack Speed). The buff stacks up to 10 times. Each charge last for 5 seconds and is refreshed on a successful auto attack. Upon activating the special ability (possible only at 10 charges), the Destroyer starts spinning around himself, dealing physical damage (Attack Power) to all nearby enemies every 0.75 seconds for 5 seconds. After the ability ends, all charges are reset. Weapon Specialization Bonus + 0.75 seconds to effect duration.",
           nodes: [
             {type: 'big', description: "Ronin's Stoicism: During the ability's duration, the Destroyer takes 20% less damage.", icon: "DES/DPU1.png"},
             {type: 'small', description: "empty", icon: "spells/plus.png"},
@@ -621,14 +607,7 @@ With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
         {
           // Row 0: Shaman Q: Rip Apart
           startIcon: "spells/ranger-q.png", // add the start icon here
-          startDescription: 
-            `Q: Rip Apart  
-
-            Description:The shaman quickly leaps towards the target, delivering destabilizing strikes.  
-
-The next 4 auto-attacks reduce the target's Armor and Magical Resistance by 5 units per attack for 6 seconds.  
-
-With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
+          startDescription:"Q: The Ranger fires an arrow with a net in a target direction, which deals physical damage (Attack Power) to the first enemy it hits in its path, rooting them. Details Cast time: 0.2 s Range: 8 Damage: 15  / 25  / 35  / 45  / 55 Cost: 5  / 10  / 15  / 20  / 25 Mana Cooldown: 18  / 16  / 14  / 12  / 10 s",
 
           nodes: [
             {type: 'big', description: "Binding Net: The net becomes denser, reducing AttackSpeed and casting speed by 50% for affected targets.", icon: "RAN/RQU1.png"},
@@ -649,7 +628,7 @@ With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
         {
           // Row 1: Update as needed
           startIcon: "spells/ranger-w.png",    
-          startDescription: "Base Spell Row 1 (Update me)",
+          startDescription: "W: Shot with a volley of arrows into the specified area, dealing physical damage (Attack Power) and slowing affected enemies for 3 seconds. Details Cast time: 0.2 Range: 10 Damage: 20  / 40  / 60  / 80  / 100 Cost: 10  / 15  / 20  / 25  / 30 Mana Cooldown: 12  / 11  / 10  / 9  / 8 s",
           nodes: [
             {type: 'big', description: "Area Marksmanship: Applies 1 passive arrow to all affected enemies.", icon: "RAN/RWWU1.png"},
             {type: 'small', description: "empty", icon: "spells/plus.png"},
@@ -669,7 +648,7 @@ With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
         {
           // Row 2: Update as needed
           startIcon: "spells/ranger-e.png",
-          startDescription: "Base Spell Row 2 (Update me)",
+          startDescription: "E: Switch between two stances. Each switch takes 1 second. Normal Stance: Shoot regular auto-attacks. Barrage Stance: Auto-attacks also hit the nearest 2 targets (additional targets also receive on-hit effects). Additional targets recieve 50% physical damage. Arrows remain in the affected targets. Attack Speed applies only to the primary target. Each shot consumes Mana. Details Cast time: instant Cost: 2 Mana Cooldown: 6 s ",
           nodes: [
             {type: 'big', description: "Armor Penetration Expertise: Ignores 2% of target's Armor per lodged arrow in standard stance.", icon: "RAN/RWU1.png"},
             {type: 'small', description: "empty", icon: "spells/plus.png"},
@@ -689,7 +668,7 @@ With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
         {
           // Row 3: Update as needed
           startIcon: "PFEC.png",
-          startDescription: "Base Spell Row 3 (Update me)",
+          startDescription: "PASSIVE: The Ranger's auto-attacks leave arrows in enemies. For each arrow, the ranger gains a 2% increase in Attack Speed, stacking up to 6 times. The special ability can be activated, detonating all arrows in enemies and dealing physical damage (Spell Power) to them.",
           nodes: [
             {type: 'big', description: "Arrow Chaser: The Ranger moves 15% faster when moving towards a target with 5 or more arrows.", icon: "RAN/REU1.png"},
             {type: 'small', description: "empty", icon: "spells/plus.png"},
@@ -718,14 +697,7 @@ With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
         {
           // Row 0: Shaman Q: Rip Apart
           startIcon: "spells/infiltrator-q.png", // add the start icon here
-          startDescription: 
-            `Q: Rip Apart  
-
-            Description:The shaman quickly leaps towards the target, delivering destabilizing strikes.  
-
-The next 4 auto-attacks reduce the target's Armor and Magical Resistance by 5 units per attack for 6 seconds.  
-
-With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
+          startDescription:"Q: The Infiltrator uses a device for 2 seconds, gaining camouflage for 7 seconds. While in camouflage the Infiltrator is invisible to enemies, but movement speed is reduced by 20%. Any action breaks the effect. First damage from camouflage catches enemies off guard, preventing them from using abilities for 2 seconds. Branch stat increases camouflage duration by +1 second per talent.. Details Cast time: 0.5 s Damage: 70  / 90  / 110  / 130  / 150 Cost: 28  / 30  / 33  / 35  / 38 Mana Cooldown: 20 s",
 
           nodes: [
             {type: 'big', description: "Shadow Grace: MoveSpeedFinalKPositive in camouflage is increased by 20%.", icon: "INF/IQU1.png"},
@@ -746,7 +718,7 @@ With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
         {
           // Row 1: Update as needed
           startIcon: "spells/infiltrator-w.png",    
-          startDescription: "Base Spell Row 1 (Update me)",
+          startDescription: "W: The Infiltrator throws a mine to the specified location: Upon landing, the mine burrows into the ground after 1 second, activates, and becomes invisible for 30 seconds. If an enemy is within a 2-meter radius of the active mine, it detonates, dealing magical damage (100% Spell Power) and applies a slowing effect to all enemies damaged by the ability for 3 seconds. The mine instantly detonates if an enemy is within a 1-meter radius of its landing location. Only one mine can be active at a time. (Branch stat increases mine duration. Cast time: 1 s Range: 10 Damage: 60  / 75  / 90  / 105  / 120 Cost: 18  / 20  / 23  / 25  / 28 Mana Cooldown: 15 s E: The Infiltrator throws a cluster of grenades on the ground in front of them (with a width of 3 meters). All enemy targets in the area receive an electric shock dealing magical damage (Spell Power). Additionally, they are rooted for 2 seconds. Details Cast time: 0.3 s Range: 10 Damage: 25  / 40  / 55  / 70  / 85 Cost: 18  / 23  / 28  / 33  / 38 Mana Cooldown: 14  / 13  / 12  / 11  / 10 s",
           nodes: [
             {type: 'big', description: "Stunning Grenade: If the mine lands on an enemy, they will be stunned for 2 seconds.", icon: "INF/IWU1.png"},
             {type: 'small', description: "empty", icon: "spells/plus.png"},
@@ -766,7 +738,7 @@ With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
         {
           // Row 2: Update as needed
           startIcon: "spells/infiltrator-e.png",
-          startDescription: "Base Spell Row 2 (Update me)",
+          startDescription: "E: The Infiltrator throws a cluster of grenades on the ground in front of them (with a width of 3 meters). All enemy targets in the area receive an electric shock dealing magical damage (Spell Power). Additionally, they are rooted for 2 seconds. Details Cast time: 0.3 s Range: 10 Damage: 25  / 40  / 55  / 70  / 85 Cost: 18  / 23  / 28  / 33  / 38 Mana Cooldown: 14  / 13  / 12  / 11  / 10 s",
           nodes: [
             {type: 'big', description: "Blitz: MoveSpeedFinalKPositive increases by 20% towards the rooted target. Activates from 2 meters and farther.", icon: "INF/IEU1.png"},
             {type: 'small', description: "empty", icon: "spells/plus.png"},
@@ -786,7 +758,7 @@ With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
         {
           // Row 3: Update as needed
           startIcon: "PFEC.png",
-          startDescription: "Base Spell Row 3 (Update me)",
+          startDescription: "PASSIVE: Attacks and abilities directed at an enemy's back receive a bonus damage of 10% + (1% for every 50 (Attack Power or Spell Power)) adaptive. The Infiltrator can activate a special ability and throw a dagger in the chosen direction, followed by a second dagger within 2 seconds. Upon hitting the target, the dagger impales and deals 100% (Attack Power) damage. Cooldown is 30 seconds. After using the special ability, the Bomber remains unarmed for 5 seconds.",
           nodes: [
             {type: 'big', description: "Toxic Blades: The Infiltrator poisons the daggers before throwing, causing enemies to take additional damage equal to 20% SpellPower over 7 seconds. This effect can sta", icon: "INF/IPU1.png"},
             {type: 'small', description: "empty", icon: "spells/plus.png"},
@@ -816,14 +788,7 @@ With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
         {
           // Row 0: Shaman Q: Rip Apart
           startIcon: "spells/blast-medic-q.png", // add the start icon here
-          startDescription: 
-            `Q: Rip Apart  
-
-            Description:The shaman quickly leaps towards the target, delivering destabilizing strikes.  
-
-The next 4 auto-attacks reduce the target's Armor and Magical Resistance by 5 units per attack for 6 seconds.  
-
-With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
+          startDescription:"Q: Throws a bomb that deals magical damage to enemies (Spell Power) and restores Health to allies (Spell Power). The bomb bounces (ricochets) from target to target twice, hitting a total of 3 targets. Each successful bounce increases the bomb's damage, while bounces off allies reduce the amount of health restored. Details Cast time: 1.2 s Range: 12 Damage with each next ricochet: 60  / 70  / 80  / 90  / 100 Healing with each next ricochet: 60  / 70  / 80  / 90  / 100 Cost: 10  / 15  / 25  / 45  / 75 Mana Cooldown: 6  / 5.5  / 5  / 4.5  / 4 s",
 
           nodes: [
             {type: 'big', description: "Rebound Precision: Increases the projectile's bounces by 1.", icon: "BLA/BQU1.png"},
@@ -844,7 +809,7 @@ With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
         {
           // Row 1: Update as needed
           startIcon: "spells/blast-medic-w.png",    
-          startDescription: "Base Spell Row 1 (Update me)",
+          startDescription: "W: Throw a bomb into the selected area, dealing physical damage to enemies (Weapon Damage, Spell Power) and blinding affected enemies for 2 seconds. The Blast Medic and allies in the explosion radius receive a shield (Shielding Power). Weapon Specialization Bonus + 0.2 seconds to blind duration. Details Cast time: instant Range: 8 Damage: 30  / 50  / 70  / 90  / 110 Cost: 10  / 15  / 20  / 25  / 30 Mana Cooldown: 18 s",
           nodes: [
             {type: 'big', description: "Speed Guard: While the shield from this ability is active, the target receives a 30% reduction in slowing effects.", icon: "BLA/BWU1.png"},
             {type: 'small', description: "empty", icon: "spells/plus.png"},
@@ -864,7 +829,7 @@ With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
         {
           // Row 2: Update as needed
           startIcon: "spells/blast-medic-e.png",
-          startDescription: "Base Spell Row 2 (Update me)",
+          startDescription: "E: The Blast Medic creates a decoy and sends it in the chosen direction. Upon collision with the clone, enemies suffer magical damage (Spell Power), while allies regain Health (Spell Power). Upon reactivation of the ability, the character swaps places with the clone.Weapon Specialization Bonus +1 second to clone lifespan. Details Cast time: instant Damage: 20  / 35  / 50  / 65  / 80 Healing: 30  / 50  / 70  / 90  / 110 Cost: 10  / 20  / 30  / 40  / 50 Mana  Cooldown: 22  / 20  / 18  / 16  / 14 s",
           nodes: [
             {type: 'big', description: "Regenerative Impact: When the clone hits enemies, the Blast Medic restores 5% + (1% for every 20 HLPower) health.", icon: "BLA/BEU1.png"},
             {type: 'small', description: "empty", icon: "spells/plus.png"},
@@ -884,7 +849,7 @@ With 5 charges of elemental power, the target is immobilized for 2 seconds.`,
         {
           // Row 3: Update as needed
           startIcon: "PFEC.png",
-          startDescription: "Base Spell Row 3 (Update me)",
+          startDescription: "PASSIVE: The Blast Medic begins cycling through enhancements (after activation, the effect changes every 10 seconds). Reactivating the ability triggers the current enhancement. Types of Enhancement: 1. Outgoing healing or shielding is increased by 30%. 2. The Bomber executes the next 3 basic attacks at maximum Attack Speed. 3. Damage of the next ability is increased by 30%. Details Cooldown: 6 s",
           nodes: [
             {type: 'big', description: "Speed Surge Protocol Desc: Activating one of the modes increases the Blast Medic's MoveSpeedFinalKPositive by 20% for 3 seconds.", icon: "BLA/BPU1.png"},
             {type: 'small', description: "empty", icon: "spells/plus.png"},

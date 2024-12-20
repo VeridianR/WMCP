@@ -958,43 +958,56 @@ classButtons.forEach(button => {
     });
   }
 
-  function onNodeClick(e) {
-    const node = e.currentTarget;
-    const row = node.getAttribute('data-row');
-    const index = parseInt(node.getAttribute('data-index'), 10);
-    const rowNodes = Array.from(document.querySelectorAll(`.mastery-node[data-row="${row}"]`));
+function onNodeClick(e) {
+  const node = e.currentTarget;
+  const row = node.getAttribute('data-row');
+  const index = parseInt(node.getAttribute('data-index'), 10);
+  const rowNodes = Array.from(document.querySelectorAll(`.mastery-node[data-row="${row}"]`));
 
   if (node.classList.contains('selected')) {
-        // Deselecting: check subsequent nodes
+        // Deselecting: check subsequent nodes and unselect them
         for (let i = index + 1; i < rowNodes.length; i++) {
             if (rowNodes[i].classList.contains('selected')) {
-                return;
+                rowNodes[i].classList.remove('selected');
+                selectedCount--;
             }
         }
         node.classList.remove('selected');
         selectedCount--;
 
-        // Uncheck final button if the full row is not selected
-        if (!isRowFullySelected(row)) {
-            finalButtons.forEach(btn => {
-                btn.classList.remove('selected');
-                btn.classList.remove('locked');
-            });
-            finalButtonSelected = false;
-        }
-    } else {
-        // Selecting: check all previous nodes
-        for (let i = 0; i < index; i++) {
-            if (!rowNodes[i].classList.contains('selected')) {
-                return;
-            }
-        }
-        node.classList.add('selected');
-        selectedCount++;
-    }
+      // Uncheck final button if the full row is not selected
+      if (!isRowFullySelected(row)) {
+          finalButtons.forEach(btn => {
+              btn.classList.remove('selected');
+              btn.classList.remove('locked');
+          });
+          finalButtonSelected = false;
+      }
+  } else {
+      // Selecting:
+      // Check if all previous nodes are selected. If not, select them too.
+      let nodesToSelect = [];
+      for (let i = 0; i <= index; i++) {
+          if (!rowNodes[i].classList.contains('selected')) {
+              nodesToSelect.push(rowNodes[i]);
+          }
+      }
 
-    updateStatus();
+      // Check if adding these nodes exceeds the max selected limit
+      if (selectedCount + nodesToSelect.length > maxSelected) {
+          return; // Can't select because it would exceed max
+      }
+
+      // Select all required nodes
+      for (let n of nodesToSelect) {
+          n.classList.add('selected');
+          selectedCount++;
+      }
   }
+
+  updateStatus();
+}
+
 
   finalButtons.forEach(btn => {
     btn.addEventListener('click', () => {
